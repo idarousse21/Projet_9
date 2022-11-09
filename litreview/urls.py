@@ -18,17 +18,22 @@ from django.urls import path
 from django.contrib.auth.views import LoginView
 import authentication.views
 import review.views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(
         "",
-        LoginView.as_view(
-            template_name="authentication/login.html"
-        ),
+        LoginView.as_view(template_name="authentication/login.html"),
         name="login",
     ),
     path("logout/", authentication.views.logout_user, name="logout"),
     path("flux/", review.views.flux, name="flux"),
     path("signup/", authentication.views.signup_page, name="signup"),
+    path("create_ticket/", review.views.create_ticket, name="create_ticket"),
+    path("create_review/", review.views.create_review, name="create_review"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
