@@ -1,5 +1,5 @@
 {% extends 'base_review.html' %}
-{% block content %}
-    <button type="button" onclick="window.location.href= '{% url 'create_ticket' %}'">Demander une critique</button>
-    <button type="button" onclick="window.location.href= '{% url 'create_review' %}'">Créer une critique</button>
-{% endblock content %}
+{% block user %}
+    <button type="button" > <a href="{% url 'create_ticket' %}">Demander une critique </a></button>
+    <button type="button" ><a href="{% url 'create_review' %}">Créer une critique </a></button>
+{% endblock user %}

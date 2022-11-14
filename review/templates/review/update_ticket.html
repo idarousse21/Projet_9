@@ -1,0 +1,8 @@
+{% extends 'base_review.html' %}
+{% block user %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update">
+    </form>
+{% endblock user %}
