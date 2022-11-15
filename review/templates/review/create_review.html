@@ -1,12 +1,13 @@
 {% extends 'base_review.html' %}
 {% block user %}
-    <h2>Créer une critique</h2>
+<h2>Créer une critique</h2>
     <form method="post" enctype="multipart/form-data">
         <h3> Livre / Article</h3>
-            {{ ticket_form.as_p }}
+        {{ ticket_form.as_p }}
         <h3> Critique </h3>
         {{ review_form.as_p }}
         {% csrf_token %}
         <button type="submit">Envoyer</button>
     </form>
+   
 {% endblock user %}

@@ -3,9 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.conf import settings
 from . import forms, models
-from django.views.generic import View, FormView, ListView, UpdateView, DeleteView
+from django.views.generic import View, CreateView, ListView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django.db.models import Q
 # Create your views here.
 
 
@@ -14,13 +15,15 @@ def flux(requests):
     return render(requests, "review/flux.html")
 
 
-class CreateTicket(LoginRequiredMixin, FormView):
-    template_name = "review/create_ticket.html"
+class CreateTicket(LoginRequiredMixin, CreateView):
+    model = models.Ticket
     form_class = forms.TicketForm
-    success_url = settings.LOGIN_REDIRECT_URL
+    template_name = "review/create_ticket.html"
+    success_url = reverse_lazy("flux")
 
-    def form_valid(self, form):
-        return super().form_valid(form)
+    def form_valid(self, form_class):
+        form_class.instance.user = self.request.user
+        return super().form_valid(form_class)
 
 
 @login_required
@@ -49,13 +52,11 @@ def create_review(request):
 class ViewPosts(LoginRequiredMixin, ListView):
     model = models.Ticket
     template_name = "review/posts.html"
-    paginate_by = 100
+    paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["now"] = timezone.now()
-        return context
-
+    def get_queryset(self):
+        return models.Ticket.objects.filter(user=self.request.user)
+   
 
 class UpdateTicket(LoginRequiredMixin, UpdateView):
     model = models.Ticket
