@@ -1,9 +1,11 @@
 {% extends 'base_review.html' %}
+{% load review_extras %}
 {% block user %}
-    {% for ticket in object_list %}
-        <h3>{{ticket.title}}</h3>
-        <img src="{{ticket.image.url}}">
-        <button><a href="{% url 'update-ticket' ticket.id %}">[modifier]</a></button>
-        <button><a href="{% url 'delete-ticket' ticket.id %}">Supprimé</a></button>
+    {% for instance in object_list %}
+        {% if instance|model_type == "Ticket" %}
+            {% include "review/partials/ticket_snippet.html" with ticket=instance %}
+        {% elif instance|model_type == "Review" %}
+        {% include "review/partials/review_snippet.html" with review=instance %}
+        {% endif %}
     {% endfor %}
 {% endblock user %}

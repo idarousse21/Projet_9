@@ -1,0 +1,8 @@
+{% load review_extras %} 
+    
+    {% include "review/partials/ticket_snippet.html" with ticket=review.ticket %}
+    <h3>{{review.headline}}</h3>
+    <p>{{review.rating}}</p>
+    <p>{{review.body}}</p>
+    <button><a href="{% url 'update-review' review.id %}">Modifier</a></button>
+    <button><a href="{% url 'delete-review' review.id %}">Supprimer</a></button>

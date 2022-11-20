@@ -1,0 +1,14 @@
+{% extends 'base_review.html' %}
+{% block user %}
+    <h2>Suivre des utilisateurs</h2>
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" >Confirmer</button>
+    </form>
+    
+    {% for follow in follows %}
+        <p>{{follow.followed_user}}</p>
+    {% endfor %}
+
+{% endblock user %}

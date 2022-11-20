@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from . import models
 
@@ -10,7 +12,6 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    TicketForm()
     class Meta:
         labels = {"headline": "Titre", "rating": "Note", "body": "Commentaire"}
         CHOICES = [
@@ -25,5 +26,7 @@ class ReviewForm(forms.ModelForm):
         widgets = {"rating": forms.RadioSelect(choices=CHOICES)}
 
 
-class FollowUserForm(forms.Form):
-    followed_user = forms.CharField(label=False, widget=forms.TextInput())
+class SubsForm(forms.ModelForm):
+    class Meta:
+        model = models.UserFollows
+        fields = ["followed_user"]

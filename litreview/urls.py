@@ -18,12 +18,16 @@ from django.urls import path
 from django.contrib.auth.views import LoginView
 import authentication.views
 from review.views import (
-    flux,
-    create_review,
+    ViewFlux,
     CreateTicket,
     UpdateTicket,
-    ViewPosts,
     DeleteTicket,
+    create_review,
+    UpdateReview,
+    DeleteReview,
+    ViewPosts,
+    Subscription,
+    ViewSubscription,
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -32,21 +36,28 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path(
         "",
-        LoginView.as_view(template_name = "authentication/login.html"),
+        LoginView.as_view(template_name="authentication/login.html"),
         name="login",
     ),
     path("logout/", authentication.views.logout_user, name="logout"),
-    path("flux/", flux, name="flux"),
+    path("flux/", ViewFlux.as_view(), name="flux"),
     path("signup/", authentication.views.signup_page, name="signup"),
     path("create-ticket/", CreateTicket.as_view(), name="create_ticket"),
-    path("create-review/", create_review, name="create_review"),
-    path("posts/", ViewPosts.as_view(), name="posts"),
     path(
-        "update/<pk>",
+        "update-ticket/<pk>/",
         UpdateTicket.as_view(),
         name="update-ticket",
     ),
-    path("delete-ticket/<pk>", DeleteTicket.as_view(), name="delete-ticket"),
+    path("delete-ticket/<int:pk>/", DeleteTicket.as_view(), name="delete-ticket"),
+    path("create-review/", create_review, name="create_review"),
+    path(
+        "update-review/<pk>/",
+        UpdateReview.as_view(),
+        name="update-review",
+    ),
+    path("delete-review/<pk>/", DeleteReview.as_view(), name="delete-review"),
+    path("posts/", ViewPosts.as_view(), name="posts"),
+    path("subscription/", Subscription.as_view(), name="subscription"),
 ]
 
 if settings.DEBUG:
