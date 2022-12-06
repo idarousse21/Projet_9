@@ -1,0 +1,16 @@
+{% extends 'base_review.jinja2' %}
+{% block user %}
+    <div class="update_ticket">
+        <div class="create_ticket">
+            <h2>Modifier votre ticket</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if ticket.image %}
+                    <p><img src="{{ticket.image.url}}"></p>
+                {% endif %}
+                <input type="submit" value="Confirmer">
+            </form>
+        </div>
+    </div>
+{% endblock user %}

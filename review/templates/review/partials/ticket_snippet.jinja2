@@ -1,0 +1,17 @@
+{% load review_extras %} 
+    <div class="ticket_info">
+            <p> {{ticket.time_created}} </p>
+            <p>Vous avez publié un ticket</p>
+            <h3>{{ticket.title}}</h3>
+            <p>{{ticket.description}}</p>
+        {% if ticket.image %}
+            <p><img src="{{ticket.image.url}}"></p>
+        {% endif %}
+        {% if user == ticket.user %}
+            <div class="delete_and_update">
+                <a href="{% url 'update-ticket'  ticket.id %}"><button>Modifier</button></a>
+                <a href="{% url 'delete-ticket' ticket.id %}"><button>Supprimer</button></a>
+            </div>
+        {% endif %}
+    </div>
+    

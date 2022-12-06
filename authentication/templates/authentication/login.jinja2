@@ -1,0 +1,18 @@
+{% extends 'base.jinja2' %}
+{% block login_and_signup %}
+    <div class="register_and_login">
+        <div class="register">
+            <h2>Inscrivez-vous maintenant</h2>
+            <a href="{% url 'signup' %}"><button type="button">S'inscrire</button></a>
+        </div>
+        <div class="login">
+            <h2> Connectez-vous</h2>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock login_and_signup %}

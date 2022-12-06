@@ -1,0 +1,21 @@
+{% extends 'base_review.jinja2' %}
+{% block user %}
+    <div class="create_review_and_ticket">
+        <h2>Créer une critique</h2>
+        <div class="create_ticket">
+            <form method="post" enctype="multipart/form-data">
+            <h3> Livre / Article</h3>
+            {{ ticket_form.as_p }}
+        </div>
+        <div class="create_review">
+            <h3> Critique </h3>
+            {{ review_form.as_p }}
+            {% csrf_token %}
+            <button type="submit">Envoyer</button>
+        </div>
+    </div>
+    </form>
+
+
+
+{% endblock user %}

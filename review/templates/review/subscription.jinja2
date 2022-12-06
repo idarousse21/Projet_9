@@ -1,0 +1,26 @@
+{% extends "base_review.jinja2" %}
+{% block user %}
+    <div class="subscription_block">
+        <h3>Suivre des utilisateurs</h3>
+        <div class="suscription_form">
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+        <h3> Abonnements</h3>
+        {% for follow in follows %}
+        <div class="follower">
+                <p>{{follow.followed_user}} </p>
+                <a  href="{% url 'delete-subscription' follow.id %}"><button> Désabonner</button></a>
+        </div>
+        {% endfor %}
+            <h3> Abonnés</h3>
+        {% for follower in followers%}
+            <div class="suscriber">
+                <p>{{follower.user}}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock user %}

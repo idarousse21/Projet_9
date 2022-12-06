@@ -14,21 +14,60 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth.views import LoginView
-import authentication.views
-import review.views
+from authentication.views import logout_user, signup_page
+from review.views import (
+    ViewFlux,
+    CreateTicket,
+    UpdateTicket,
+    DeleteTicket,
+    create_review,
+    UpdateReview,
+    DeleteReview,
+    ViewPosts,
+    Subscription,
+    ticket_response,
+    DeleteSuscription,
+)
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(
         "",
-        LoginView.as_view(
-            template_name="authentication/login.html"
-        ),
+        LoginView.as_view(template_name="authentication/login.jinja2"),
         name="login",
     ),
-    path("logout/", authentication.views.logout_user, name="logout"),
-    path("flux/", review.views.flux, name="flux"),
-    path("signup/", authentication.views.signup_page, name="signup"),
+    path("logout/", logout_user, name="logout"),
+    path("flux/", ViewFlux.as_view(), name="flux"),
+    path("signup/", signup_page, name="signup"),
+    path("create-ticket/", CreateTicket.as_view(), name="create_ticket"),
+    path(
+        "update-ticket/<int:pk>/",
+        UpdateTicket.as_view(),
+        name="update-ticket",
+    ),
+    path("delete-ticket/<int:pk>/", DeleteTicket.as_view(), name="delete-ticket"),
+    path("create-review/", create_review, name="create_review"),
+    path(
+        "update-review/<int:pk>/",
+        UpdateReview.as_view(),
+        name="update-review",
+    ),
+    path("delete-review/<int:pk>/", DeleteReview.as_view(), name="delete-review"),
+    path("posts/", ViewPosts.as_view(), name="posts"),
+    path("subscription/", Subscription.as_view(), name="subscription"),
+    path(
+        "delete-subscription/<int:pk>/",
+        DeleteSuscription.as_view(),
+        name="delete-subscription",
+    ),
+    path("ticket-response/<int:ticket_id>/", ticket_response, name="ticket-response"),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

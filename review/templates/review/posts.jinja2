@@ -1,0 +1,26 @@
+{% extends 'base_review.jinja2' %}
+{% load review_extras %}
+{% block user %}
+    <div class="view_posts">
+        {% for instance in object_list %}
+            {% if instance|model_type == "Ticket" %}
+                {% include "review/partials/ticket_snippet.jinja2" with ticket=instance %}
+            {% elif instance|model_type == "Review" %}
+                {% include "review/partials/review_snippet.jinja2" with review=instance %}
+            {% endif %}
+        {% endfor %}
+        <div class="pagination">
+                <p>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</p>
+            <div class="button_pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1"><button>&laquo; Première</button></a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><button>Précédent</button></a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}"><button>Suivant</button></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}"><button>Dernière &raquo;</button></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock user %}
