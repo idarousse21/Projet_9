@@ -1,0 +1,12 @@
+{% load static %}
+<html>
+    <head>
+        <title>LITReview</title>
+    </head>
+    <link rel="stylesheet" href="{% static 'authentication/styles.css' %}" />
+    <body>
+
+        <h1 class="title_site">LITReview</h1>
+        {% block login_and_signup %}{% endblock login_and_signup %}
+    </body>
+</html>

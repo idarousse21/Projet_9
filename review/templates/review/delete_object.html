@@ -1,8 +1,0 @@
-{% extends 'base_review.html' %}
-{% block user %}
-<form method="post">{% csrf_token %}
-    <p>Êtes-vous sûr de vouloir supprimer "{{ object.title }}"?</p>
-   
-    <input type="submit" value="Confirmer">
-</form>
-{% endblock user %}

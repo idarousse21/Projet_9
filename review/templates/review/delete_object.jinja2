@@ -1,0 +1,17 @@
+{% extends 'base_review.jinja2' %}
+{% block user %}
+    <div class="delete_object">
+        <form method="post">
+            {% csrf_token %}
+            {% if  object.title  %}
+                <p>Êtes-vous sûr de vouloir supprimer "{{ object.title }}"?</p>
+                    
+            {% elif object.headline %}
+                <p>Êtes-vous sûr de vouloir supprimer "{{ object.headline }}"?</p>
+            {% else %}
+                <p>Se désabonner de "{{ object.followed_user }}"?</p>
+            {% endif %}
+            <input type="submit" value="Confirmer">
+        </form>
+    </div>
+{% endblock user %}

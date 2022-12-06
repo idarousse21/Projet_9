@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "authentication",
     "review",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -49,11 +50,19 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "litreview.urls"
 
 TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "DIRS": [
+            BASE_DIR.joinpath("templates"),
+        ],
+        "APP_DIRS": True,
+    },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
@@ -99,7 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "authentication.validators.ContainsLetterValidator",
     },
 ]
-
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

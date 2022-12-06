@@ -1,0 +1,11 @@
+{% extends "base_review.jinja2" %}
+{% block user %}
+    <div class="create_ticket">
+        <h2>Créer un ticket</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+{% endblock user %}

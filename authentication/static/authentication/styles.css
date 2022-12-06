@@ -1,0 +1,71 @@
+body {
+    border: solid;
+}
+
+h1.title_site {
+    text-align: center;
+    border-bottom: solid;
+
+}
+
+.register_and_login {
+    display: flex;
+    justify-content: center;
+    gap: 300px;
+
+}
+
+.register {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+}
+
+.login h2 {
+    text-align: center;
+}
+
+.login form,
+button {
+    margin-top: 15px;
+}
+
+.login button {
+    margin-left: 110px;
+}
+
+.signup {
+    text-align: center;
+}
+
+.signup input {
+    width: 308px;
+    height: 26px;
+    text-align: center;
+}
+
+.signup ul {
+    list-style-type: none;
+}
+
+.button_signup {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    margin-top: 30px
+}
+
+a {
+    text-decoration-line: none;
+    color: black;
+}
+
+button {
+    width: 96px;
+    height: 26px;
+    cursor: pointer;
+}

@@ -1,0 +1,21 @@
+
+{% extends 'base_review.jinja2' %}
+{% block user %}
+<div class="update_review">
+        <h2>Modifié votre critique</h2>
+    <div class="contains_review_ticket">
+        <h3>Vous êtes en train de poster en réponse à</h3>
+        {% include "review/partials/view_a_review_ticket_snippet.jinja2" with ticket=review.ticket %}
+    </div>
+    <div class="create_review">
+        <h3>Critique</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Confirmer">
+    </form>
+    </div>
+</div>
+
+{% endblock user %}

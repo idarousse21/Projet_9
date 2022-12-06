@@ -12,4 +12,3 @@ class ContainsLetterValidator:
 
     def get_help_text(self):
         return "Votre mot de passe doit contenir au moins une lettre majuscule ou minuscule."
-

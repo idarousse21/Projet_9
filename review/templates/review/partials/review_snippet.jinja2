@@ -1,0 +1,32 @@
+{% load review_extras %} 
+    <div class="review">
+        <p>{{ review.time_created }}</p>
+        {% if user == review.user %}
+            <p>Vous avez publié une critique</p>
+        {% else %}
+            <p>{{ review.user }} a posté une critique</p>
+        {% endif %}
+        <h3>{{review.headline}} -
+            
+            {% for i in 5|get_range %}
+                {% if review.rating > i %}
+                    {{ "&#9733;" }}
+                {% else %}
+                    {{ "&#9734;" }}
+                {% endif %}
+            {% endfor %}
+        
+        </h3>
+        <p>{{review.body}}</p>
+        <div class="ticket">
+            {% include "review/partials/ticket_flux_snippet.jinja2" with ticket=review.ticket %}
+        </div>
+        {% if user == review.user %}
+        <div class="delete_and_update">
+            <a href="{% url 'update-review' review.id %}"><button>Modifier</button></a>
+            <a href="{% url 'delete-review' review.id %}"></a><button>Supprimer</button></a>
+        </div>
+        {% endif %}
+    </div>
+    
+    

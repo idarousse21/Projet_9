@@ -1,18 +1,7 @@
-from django.conf import settings
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
-
-from django.views.generic.edit import FormView
+from django.conf import settings
 from . import forms
-
-
-class LoginPageView(FormView):
-    form_class = forms.LoginForm
-    template_name = "authentication/login.html"
-    success_url = settings.LOGIN_REDIRECT_URL
-
-    def form_valid(self, form):
-        return super().form_valid(form)
 
 
 def logout_user(request):
@@ -28,4 +17,8 @@ def signup_page(request):
             user = signup.save()
             login(request, user)
             return redirect(settings.LOGIN_URL)
-    return render(request, "authentication/signup.html", context={"signup": signup})
+    return render(
+        request,
+        "authentication/signup.jinja2",
+        context={
+            "signup": signup})

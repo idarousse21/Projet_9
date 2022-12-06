@@ -7,10 +7,11 @@ from PIL import Image
 class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=2048, blank=True)
-    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
-
     IMAGE_MAX_SIZE = (200, 200)
 
     def resize_image(self):
@@ -20,12 +21,16 @@ class Ticket(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.resize_image()
+        if self.image:
+            self.resize_image()
+
 
 class Review(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
-    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(5)]
     )
@@ -35,8 +40,9 @@ class Review(models.Model):
 
 class UserFollows(models.Model):
     user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following"
-    )
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="following")
     followed_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

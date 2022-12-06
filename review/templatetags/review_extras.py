@@ -13,3 +13,10 @@ def get_poster_display(context, user):
     if context["user"] == user:
         return "Vous"
     return user.username
+
+
+@register.filter
+def get_range(number):
+    return range(int(number))
+
+

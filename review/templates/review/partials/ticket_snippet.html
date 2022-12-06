@@ -1,7 +1,0 @@
-{% load review_extras %} 
-    <p>Ticket - {% get_poster_display ticket.user %}</p>
-    <p> {{ticket.time_created}} </p>
-    <h3>{{ticket.title}}</h3>
-    <img src="{{ticket.image.url}}">
-    <button><a href="{% url 'update-ticket' ticket.id %}">[modifier]</a></button>
-    <button><a href="{% url 'delete-ticket' ticket.id %}">Supprimé</a></button>
