@@ -60,13 +60,17 @@
             titi : secret<br/>
             ida : 123456
         </li>
+    </ul>
         <p> Pour acceder a la page de l'admin:</p>
+        <ul>
         <li> Taper l'url sur votre navigateur</li>
             <ul><li>http://localhost:8000/admin/</li></ul>
+        </ul>
         <p>Et utiliser l'identifiant et le mot de passe du super utilisateur:</p>
+        <ul>
         <li>
             Super utilisateur:<br/>
             ida : 123456
         </li>
-    </ul>
+        </ul>
     
