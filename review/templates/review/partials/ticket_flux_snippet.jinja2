@@ -11,9 +11,9 @@
         {% if ticket.image %}
             <p><img src="{{ticket.image.url}}"></p>
         {% endif %}
-    
             
-        {% if user != ticket.user and not review.ticket%}
+        {% if not ticket.answered and ticket.user != user%}
             <a href="{% url 'ticket-response' ticket.id %}"><button id="button_ticket_response">Créer une critique</button></a>
         {% endif %}
+       
     </div>

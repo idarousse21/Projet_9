@@ -14,6 +14,7 @@ class BlockOtherUsers(UserPassesTestMixin):
         obj = self.get_object()
         if self.request.user:
             return obj.user == self.request.user
+        return False
 
 
 class CreateTicket(LoginRequiredMixin, CreateView):
@@ -31,19 +32,18 @@ class CreateTicket(LoginRequiredMixin, CreateView):
 def ticket_response(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     review = forms.ReviewForm()
-    follows = models.UserFollows.objects.select_related(
-        "followed_user").filter(user=request.user)
-    follows = [follow.followed_user.username for follow in follows]
-    existing_reviews = models.Review.objects.prefetch_related("ticket")
-    existing_reviews = [review.ticket.id for review in existing_reviews]
-    if ticket.user.username in follows and ticket_id != existing_reviews:
+    follows = models.UserFollows.objects.filter(user=request.user, followed_user= ticket.user)
+    ticket_reviews = models.Review.objects.filter(ticket_id= ticket_id)
+    if follows.exists() and not ticket_reviews.exists():
         if request.method == "POST":
             review = forms.ReviewForm(request.POST)
             if review.is_valid():
                 review = review.save(commit=False)
                 review.user = request.user
                 review.ticket = ticket
+                ticket.answered = True
                 review.save()
+                ticket.save()
                 return redirect(settings.LOGIN_REDIRECT_URL)
         context = {
             "ticket": ticket,
@@ -80,7 +80,7 @@ def create_review(request):
         if ticket_form.is_valid() and review_form.is_valid():
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
-
+            ticket.answered = True
             ticket.save()
             review = review_form.save(commit=False)
             review.user = request.user
