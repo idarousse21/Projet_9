@@ -54,12 +54,12 @@ class SubsForm(forms.ModelForm):
             "followed_user").filter(user=self.user)
         if self.user.username == self.cleaned_data["followed_user"]:
             raise forms.ValidationError(
-                "Vous ne pouvez pas vous abonnées a vous même")
+                "Vous ne pouvez pas vous abonner à vous-même")
         elif self.cleaned_data["followed_user"] in [
             follow.followed_user.username for follow in follows
         ]:
             raise forms.ValidationError(
-                "Vous êtes déjâ abonnée a cet utilisateur")
+                "Vous êtes déjà abonné a cet utilisateur")
         try:
             return user_model.objects.get(
                 username=self.cleaned_data["followed_user"])
